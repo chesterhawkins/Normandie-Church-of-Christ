@@ -47,3 +47,7 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Firebase / Google Services config (contain API keys)
+artifacts/southside-church/google-services.json
+artifacts/southside-church/GoogleService-Info.plist
