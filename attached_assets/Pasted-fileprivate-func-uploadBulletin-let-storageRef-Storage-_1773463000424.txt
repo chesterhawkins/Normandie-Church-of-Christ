@@ -1,0 +1,61 @@
+fileprivate func uploadBulletin() {
+        let storageRef = Storage.storage().reference()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.full
+        let origD = dateFormatter.date(from: self.newBulletinAlert!.textFields!.first!.text!)
+
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MM-dd-yyyy"
+
+        let bulletinRef = storageRef.child("bulletins/\(dateFormatterPrint.string(from: origD!)).pdf")
+
+        let metadata = StorageMetadata()
+        metadata.contentType = "application/pdf"
+
+        let task = bulletinRef.putFile(from: fileUrlToUpload!, metadata: metadata) { (_, _) in
+        }
+
+        let alert = UIAlertController(title: "Upload in progress...", message: nil, preferredStyle: UIAlertController.Style.alert)
+
+        let cancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { (_) -> Void in
+            self.fileUrlToUpload = nil
+            task.cancel()
+        })
+
+        alert.addAction(cancel)
+
+        present(alert, animated: true, completion: nil)
+        task.observe(.progress) { snapshot in
+            // Upload reported progress
+            if snapshot.progress!.totalUnitCount > 0 {
+                let percentComplete = 100 * snapshot.progress!.completedUnitCount
+                    / snapshot.progress!.totalUnitCount
+                alert.message = "\(percentComplete)%"
+            }
+        }
+
+        task.observe(.success) { _ in
+            // Upload completed successfully
+            alert.dismiss(animated: true) {
+                bulletinRef.downloadURL { (url, _) in
+                    guard let downloadURL = url else {
+                        // Uh-oh, an error occurred!
+                        return
+                    }
+                    self.newBulletinAlert!.addTextField(configurationHandler: ({(_: UITextField!) in
+                    }))
+                    self.newBulletinAlert!.textFields!.last!.text = downloadURL.absoluteString
+                    self.createBulletin()
+                    self.fileUrlToUpload = nil
+                }
+            }
+        }
+
+        task.observe(.failure) { snapshot in
+            self.fileUrlToUpload = nil
+            if StorageErrorCode(rawValue: (snapshot.error! as NSError).code) != StorageErrorCode.cancelled {
+                Helper.failedAction()
+            }
+        }
+    }

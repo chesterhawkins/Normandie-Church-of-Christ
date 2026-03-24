@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/"
+title = "Southside Church of Christ"
+version = "1.0.0"
+id = "artifacts/southside-church"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+localPort = 22066
+name = "expo"
+paths = ["/"]
+
+[services.development]
+run = "pnpm --filter @workspace/southside-church run dev"
+
+[services.env]
+PORT = "22066"
+BASE_PATH = "/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/southside-church", "run", "build"]
+run = ["pnpm", "--filter", "@workspace/southside-church", "run", "serve"]

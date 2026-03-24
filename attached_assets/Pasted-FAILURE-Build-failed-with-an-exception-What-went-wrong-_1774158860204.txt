@@ -1,0 +1,28 @@
+FAILURE: Build failed with an exception.
+* What went wrong:
+Could not determine the dependencies of task ':app:mergeReleaseNativeLibs'.
+> Could not resolve all dependencies for configuration ':app:releaseRuntimeClasspath'.
+   > Could not resolve all dependencies for configuration ':app:releaseRuntimeClasspath'.
+      > Could not find org.asyncstorage.shared_storage:storage-android:1.0.0.
+        Searched in the following locations:
+          - http://maven.production.caches.eas-build.internal/artifactory/libs-release/org/asyncstorage/shared_storage/storage-android/1.0.0/storage-android-1.0.0.pom
+          - https://dl.google.com/dl/android/maven2/org/asyncstorage/shared_storage/storage-android/1.0.0/storage-android-1.0.0.pom
+          - https://repo.maven.apache.org/maven2/org/asyncstorage/shared_storage/storage-android/1.0.0/storage-android-1.0.0.pom
+          - https://www.jitpack.io/org/asyncstorage/shared_storage/storage-android/1.0.0/storage-android-1.0.0.pom
+          - https://central.sonatype.com/repository/maven-snapshots/org/asyncstorage/shared_storage/storage-android/1.0.0/storage-android-1.0.0.pom
+        Required by:
+            project :app > project :react-native-async-storage_async-storage
+* Try:
+> The project declares repositories, effectively ignoring the repositories you have declared in the settings.
+   To determine how project repositories are declared, configure your build to fail on project repositories.
+   For more information, please refer to https://docs.gradle.org/8.14.3/userguide/declaring_repositories.html#sub:fail_build_on_project_repositories in the Gradle documentation.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+BUILD FAILED in 2m 7s
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+24 actionable tasks: 24 executed
+Error: Gradle build failed with unknown error. See logs for the "Run gradlew" phase for more information.

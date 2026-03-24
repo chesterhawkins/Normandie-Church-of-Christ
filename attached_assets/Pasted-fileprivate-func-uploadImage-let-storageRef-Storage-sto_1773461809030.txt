@@ -1,0 +1,56 @@
+fileprivate func uploadImage() {
+        let storageRef = Storage.storage().reference()
+
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let docName = dateFormatterPrint.string(from: Date())
+
+        let announcementRef = storageRef.child("announcements/\(docName)")
+
+        let task = imageDataToUpload != nil ? announcementRef.putData(imageDataToUpload!, metadata: nil) { (_, _) in
+            } : announcementRef.putFile(from: imageUrlToUpload!, metadata: nil) { (_, _) in
+        }
+
+        let alert = UIAlertController(title: "Upload in progress...", message: nil, preferredStyle: UIAlertController.Style.alert)
+
+        let cancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { (_) -> Void in
+            self.imageUrlToUpload = nil
+            self.imageDataToUpload = nil
+            task.cancel()
+        })
+
+        alert.addAction(cancel)
+
+        present(alert, animated: true, completion: nil)
+        task.observe(.progress) { snapshot in
+            // Upload reported progress
+            if snapshot.progress!.totalUnitCount > 0 {
+                let percentComplete = 100 * snapshot.progress!.completedUnitCount
+                    / snapshot.progress!.totalUnitCount
+                alert.message = "\(percentComplete)%"
+            }
+        }
+
+        task.observe(.success) { _ in
+            // Upload completed successfully
+            alert.dismiss(animated: true) {
+                announcementRef.downloadURL { (url, _) in
+                    guard let downloadURL = url else {
+                        // Uh-oh, an error occurred!
+                        return
+                    }
+                    self.sendAnnouncement(imageName: docName, imageUrl: downloadURL.absoluteString)
+                    self.imageUrlToUpload = nil
+                    self.imageDataToUpload = nil
+                }
+            }
+        }
+
+        task.observe(.failure) { snapshot in
+            self.imageUrlToUpload = nil
+            self.imageDataToUpload = nil
+            if StorageErrorCode(rawValue: (snapshot.error! as NSError).code) != StorageErrorCode.cancelled {
+                Helper.failedAction()
+            }
+        }
+    }

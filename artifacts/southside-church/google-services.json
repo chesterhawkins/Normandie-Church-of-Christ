@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "572277107721",
+    "firebase_url": "https://normandie-church-of-christ.firebaseio.com",
+    "project_id": "normandie-church-of-christ",
+    "storage_bucket": "normandie-church-of-christ.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572277107721:android:407820c68271d334305cd8",
+        "android_client_info": {
+          "package_name": "com.ojeelabs.normandiecoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572277107721-ma1ek114kip04a0ah1q9ljismpfipqhk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuPai3PR-krs4gynk9IipeQrcVDd28rXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572277107721-ma1ek114kip04a0ah1q9ljismpfipqhk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "572277107721-jhe5kjobh6ebplcar32q5a87b8fuijgi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ojeelabs.normandiecoc",
+                "app_store_id": "1505277256"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
