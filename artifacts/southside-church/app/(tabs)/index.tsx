@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
   Alert,
   Image,
-  Linking,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -59,21 +58,23 @@ export default function HomeScreen() {
       ActionSheetIOS.showActionSheetWithOptions(
         {
           title: "Give",
-          message: "Choose your giving method",
-          options: ["Cash App ($normcoc)", `Zelle (${ZELLE_EMAIL})`, "Cancel"],
-          cancelButtonIndex: 2,
+          message: `Tap below to give via Cash App.\n\nYou can also give via Zelle to ${ZELLE_EMAIL}.`,
+          options: ["Cash App ($normcoc)", "Cancel"],
+          cancelButtonIndex: 1,
         },
         (index) => {
           if (index === 0) WebBrowser.openBrowserAsync(CASHAPP_URL);
-          if (index === 1) Linking.openURL(`mailto:${ZELLE_EMAIL}`);
         }
       );
     } else {
-      Alert.alert("Give", "Choose your giving method", [
-        { text: "Cash App ($normcoc)", onPress: () => WebBrowser.openBrowserAsync(CASHAPP_URL) },
-        { text: `Zelle (${ZELLE_EMAIL})`, onPress: () => Linking.openURL(`mailto:${ZELLE_EMAIL}`) },
-        { text: "Cancel", style: "cancel" },
-      ]);
+      Alert.alert(
+        "Give",
+        `Tap below to give via Cash App.\n\nYou can also give via Zelle to ${ZELLE_EMAIL}.`,
+        [
+          { text: "Cash App ($normcoc)", onPress: () => WebBrowser.openBrowserAsync(CASHAPP_URL) },
+          { text: "Cancel", style: "cancel" },
+        ]
+      );
     }
   }, []);
 
